@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-public class UserInput : IInputActionCollection, IDisposable
+public class @UserInput : IInputActionCollection, IDisposable
 {
     private InputActionAsset asset;
-    public UserInput()
+    public @UserInput()
     {
         asset = InputActionAsset.FromJson(@"{
     ""name"": ""UserInput"",
@@ -193,8 +193,8 @@ public class UserInput : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Movement;
     public struct PlayerActions
     {
-        private UserInput m_Wrapper;
-        public PlayerActions(UserInput wrapper) { m_Wrapper = wrapper; }
+        private @UserInput m_Wrapper;
+        public PlayerActions(@UserInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -205,16 +205,16 @@ public class UserInput : IInputActionCollection, IDisposable
         {
             if (m_Wrapper.m_PlayerActionsCallbackInterface != null)
             {
-                Movement.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
-                Movement.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
-                Movement.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
+                @Movement.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
+                @Movement.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
+                @Movement.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
             {
-                Movement.started += instance.OnMovement;
-                Movement.performed += instance.OnMovement;
-                Movement.canceled += instance.OnMovement;
+                @Movement.started += instance.OnMovement;
+                @Movement.performed += instance.OnMovement;
+                @Movement.canceled += instance.OnMovement;
             }
         }
     }

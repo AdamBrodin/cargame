@@ -10,7 +10,6 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour, UserInput.IPlayerActions
 {
-    #region Variables
     #region Singleton
     private static InputManager instance;
     public static InputManager Instance
@@ -25,6 +24,7 @@ public class InputManager : MonoBehaviour, UserInput.IPlayerActions
         }
     }
     #endregion
+    #region Variables
     public Action<Vector2> movement;
     private UserInput userInput;
     #endregion
@@ -37,10 +37,7 @@ public class InputManager : MonoBehaviour, UserInput.IPlayerActions
 
     private void Update()
     {
-        /*foreach (Touch touch in Input.touches)
-        {
-            print(touch.position.ToString());
-        }*/
+        
     }
 
     private void OnEnable() => userInput.Player.Enable();
