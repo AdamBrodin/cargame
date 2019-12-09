@@ -1,14 +1,18 @@
 ﻿#pragma warning disable CS0649
 using System;
 using UnityEngine;
+using System.Collections;
 
 /* 
  * Developed by Adam Brodin
  * https://github.com/AdamBrodin
  */
+
 [RequireComponent(typeof(Collider))]
 public class Player : MonoBehaviour
 {
+    public bool isDead;
+
     #region Singleton
     private static Player instance;
     public static Player Instance
@@ -23,10 +27,16 @@ public class Player : MonoBehaviour
         }
     }
     #endregion
+
     #region Variables
     public Action<int> OnPlayerDeath;
     public Action OnItemPickup;
     #endregion
+
+    void Start()
+    {
+        isDead = false;
+    }
 
     private void OnCollisionEnter(Collision col)
     {
@@ -48,6 +58,14 @@ public class Player : MonoBehaviour
     private void KillPlayer()
     {
         OnPlayerDeath?.Invoke(ScoreSystem.Instance.currentScore);
-        Time.timeScale = 0.0f;
+        StartCoroutine(WaitAndDie());
+    }
+
+    private IEnumerator WaitAndDie()
+    {
+        Time.timeScale = 0.2f;
+        yield return new WaitForSeconds(1);
+        Time.timeScale = 0.00001f;
+        isDead = true;
     }
 }

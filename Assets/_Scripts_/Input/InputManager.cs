@@ -16,7 +16,7 @@ public class InputManager : MonoBehaviour, UserInput.IPlayerActions
     {
         get
         {
-            if (instance == null)
+            if (instance == null)g
             {
                 instance = FindObjectOfType<InputManager>();
             }
