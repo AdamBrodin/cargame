@@ -38,16 +38,22 @@ public class InputManager : MonoBehaviour, UserInput.IPlayerActions
 
     private void Update()
     {
-        //print(Input.GetTouch(0).position.ToString());
+        foreach (UnityEngine.Touch touch in UnityEngine.Input.touches)
+        {
+            if (touch.phase == UnityEngine.TouchPhase.Began)
+            {
+                Ray ray = Camera.main.ScreenPointToRay(touch.position);
+                if (Physics.Raycast(ray))
+                {
+                    print("Touch at: " + touch.position);
+                    Time.timeScale = 0.0f;
+                }
+            }
+        }
     }
 
 
     private void OnEnable() => userInput.Player.Enable();
     private void OnDisable() => userInput.Player.Disable();
     public void OnMovement(InputAction.CallbackContext context) => movement?.Invoke(context.ReadValue<Vector2>());
-
-    /* public void OnMovement(InputAction.CallbackContext ctx)
-     {
-
-     }*/
 }

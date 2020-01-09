@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/_Scenes_/Developement/Adams Test.unity
     guid: 262f03b894d895346afe3761d8c4af7b
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Scenes_/Official/Main Menu.unity
     guid: 6705c7c49c02eab44b30c687dd797735
   - enabled: 1
