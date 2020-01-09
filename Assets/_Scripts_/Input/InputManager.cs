@@ -2,6 +2,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.EnhancedTouch;
 
 /* 
  * Developed by Adam Brodin
@@ -16,7 +17,7 @@ public class InputManager : MonoBehaviour, UserInput.IPlayerActions
     {
         get
         {
-            if (instance == null)g
+            if (instance == null)
             {
                 instance = FindObjectOfType<InputManager>();
             }
@@ -25,7 +26,7 @@ public class InputManager : MonoBehaviour, UserInput.IPlayerActions
     }
     #endregion
     #region Variables
-    public Action<Vector2> movement;
+    public event Action<Vector2> movement;
     private UserInput userInput;
     #endregion
 
@@ -37,10 +38,16 @@ public class InputManager : MonoBehaviour, UserInput.IPlayerActions
 
     private void Update()
     {
-        
+        //print(Input.GetTouch(0).position.ToString());
     }
+
 
     private void OnEnable() => userInput.Player.Enable();
     private void OnDisable() => userInput.Player.Disable();
     public void OnMovement(InputAction.CallbackContext context) => movement?.Invoke(context.ReadValue<Vector2>());
+
+    /* public void OnMovement(InputAction.CallbackContext ctx)
+     {
+
+     }*/
 }
