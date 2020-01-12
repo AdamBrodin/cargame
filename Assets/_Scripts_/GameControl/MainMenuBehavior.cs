@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class MainMenuBehavior : MonoBehaviour
@@ -9,26 +7,31 @@ public class MainMenuBehavior : MonoBehaviour
     #region Variables
     public GameObject mainMenu;
     private float timer;
+    [SerializeField] private TextMeshProUGUI highscoreText;
     #endregion
 
     void Start()
     {
-        //Cursor.visible = false;
+        if (Debug.isDebugBuild) { Cursor.visible = false; }
         //FindObjectOfType<AudioManager>().Play("Theme");
+
+        float currentHighscore = PlayerPrefs.GetInt("HIGHSCORE", 0);
+        if (currentHighscore > 0)
+        {
+            highscoreText.text = "HIGHSCORE: " + currentHighscore.ToString();
+        }
     }
 
-    public void LoadScene(string scenetoLoad)
+    public void LoadScene(string sceneToLoad)
     {
         //FindObjectOfType<AudioManager>().Play("Click");
-        Debug.Log("sceneName to load: " + scenetoLoad);
-        SceneManager.LoadScene(scenetoLoad);
+        SceneManager.LoadScene(sceneToLoad);
         Time.timeScale = 1f;
     }
 
     public void ExitGame()
     {
         //FindObjectOfType<AudioManager>().Play("Click");
-        Debug.Log("UUUUUUUUT!!!!");
         Application.Quit();
     }
 }

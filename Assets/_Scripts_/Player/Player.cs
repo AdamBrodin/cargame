@@ -11,8 +11,6 @@ using System.Collections;
 [RequireComponent(typeof(Collider))]
 public class Player : MonoBehaviour
 {
-    public bool isDead;
-
     #region Singleton
     private static Player instance;
     public static Player Instance
@@ -31,12 +29,8 @@ public class Player : MonoBehaviour
     #region Variables
     public Action<int> OnPlayerDeath;
     public Action OnItemPickup;
+    public bool isDead;
     #endregion
-
-    void Start()
-    {
-        isDead = false;
-    }
 
     private void OnCollisionEnter(Collision col)
     {
@@ -55,7 +49,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void KillPlayer()
+    public void KillPlayer()
     {
         OnPlayerDeath?.Invoke(ScoreSystem.Instance.currentScore);
         StartCoroutine(WaitAndDie());

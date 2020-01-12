@@ -8,6 +8,7 @@ TagManager:
   - Obstacle
   - Desert
   - Pickup
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - PostProcessing
   - Obstacles
   - UI_Prior
-  - 
+  - Ground
   - 
   - 
   - 

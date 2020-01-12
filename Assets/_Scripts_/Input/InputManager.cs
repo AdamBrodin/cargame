@@ -2,7 +2,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.EnhancedTouch;
 
 /* 
  * Developed by Adam Brodin
@@ -28,12 +27,18 @@ public class InputManager : MonoBehaviour, UserInput.IPlayerActions
     #region Variables
     public event Action<Vector2> movement;
     private UserInput userInput;
+    private float screenWidth;
     #endregion
 
     private void Awake()
     {
         userInput = new UserInput();
         userInput.Player.SetCallbacks(this);
+    }
+
+    private void Start()
+    {
+        screenWidth = Screen.width;
     }
 
     private void Update()
@@ -45,15 +50,29 @@ public class InputManager : MonoBehaviour, UserInput.IPlayerActions
                 Ray ray = Camera.main.ScreenPointToRay(touch.position);
                 if (Physics.Raycast(ray))
                 {
-                    print("Touch at: " + touch.position);
-                    Time.timeScale = 0.0f;
+                    if (touch.position.x > screenWidth / 2)
+                    {
+                        movement?.Invoke(new Vector2(1, 0));
+                    }
+                    else if (touch.position.x < screenWidth / 2)
+                    {
+                        movement?.Invoke(new Vector2(-1, 0));
+                    }
                 }
+            }
+            if (touch.phase == UnityEngine.TouchPhase.Ended)
+            {
+                movement?.Invoke(new Vector2(0, 0));
             }
         }
     }
 
 
-    private void OnEnable() => userInput.Player.Enable();
-    private void OnDisable() => userInput.Player.Disable();
-    public void OnMovement(InputAction.CallbackContext context) => movement?.Invoke(context.ReadValue<Vector2>());
+    private void OnEnable() { if (Debug.isDebugBuild) userInput.Player.Enable(); }
+    private void OnDisable() { if (Debug.isDebugBuild) userInput.Player.Disable(); }
+    public void OnMovement(InputAction.CallbackContext context)
+    {
+        if (Debug.isDebugBuild) { movement?.Invoke(context.ReadValue<Vector2>()); }
+    }
+
 }

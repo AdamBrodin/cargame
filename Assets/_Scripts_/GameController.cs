@@ -2,12 +2,13 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class GameController : MonoBehaviour
 {
     #region Variables
     public Action startGame;
-    public Animation anim;
 
     //public Player pl;
 
@@ -20,31 +21,38 @@ public class GameController : MonoBehaviour
     public void Start()
     {
         startGame += StartGame;
-        //pl = GetComponent<Player>();
-        anim = GetComponent<Animation>();
-        anim["Cycle"].speed = animSpeed;
+        go_Screen.SetActive(false);
         AudioManager.Instance.SetState("Theme", true);
     }
 
     private void Update()
     {
         timeSpent += Time.deltaTime;
-
         if (GameObject.Find("Player").GetComponent<Player>().isDead == true)
         {
             go_Screen.SetActive(true);
+            AudioManager.Instance.SetState("Theme", false);
         }
     }
 
-    private void StartGame()
-    {
-        StartCoroutine(ScoreByTime());
-    }
-
+    private void StartGame() => StartCoroutine(ScoreByTime());
     private IEnumerator ScoreByTime()
     {
         ScoreSystem.Instance.IncreaseScore(scoreAmount);
         yield return new WaitForSeconds(increaseScoreInterval);
         StartCoroutine(ScoreByTime());
+    }
+
+    public void LoadScene(string sceneToLoad)
+    {
+        //FindObjectOfType<AudioManager>().Play("Click");
+        SceneManager.LoadScene(sceneToLoad);
+        Time.timeScale = 1f;
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene("Level");
+        Time.timeScale = 1f;
     }
 }

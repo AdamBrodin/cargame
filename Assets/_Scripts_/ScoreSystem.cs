@@ -88,10 +88,10 @@ public class ScoreSystem : MonoBehaviour
     private void SetHighScore(int value)
     {
         isAlive = false;
-        int currentHighscore = PlayerPrefs.GetInt("Highscore", 0);
+        int currentHighscore = PlayerPrefs.GetInt("HIGHSCORE", 0);
         if (currentScore > currentHighscore)
         {
-            PlayerPrefs.SetInt("Highscore", value);
+            PlayerPrefs.SetInt("HIGHSCORE", value);
         }
     }
 

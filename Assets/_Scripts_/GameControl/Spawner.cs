@@ -142,6 +142,7 @@ public class Spawner : MonoBehaviour
             int spawnPointIndex = Random.Range(0, spawnPoints.Length);
             int enemyLevelIndex = Random.Range(0, EasyEnemy.Length);
             Instantiate(EasyEnemy[enemyLevelIndex], spawnPoints[spawnPointIndex].position, spawnPoints[spawnPointIndex].rotation);
+            spawnPoints[spawnPointIndex].rotation = Quaternion.AngleAxis(Random.Range(0, 360), transform.forward) * transform.rotation;
             numEnemy++;
             spawnedEnemy++;
         }
